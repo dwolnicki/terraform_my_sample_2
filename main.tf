@@ -1,7 +1,9 @@
 
 provider "aws"{
-    shared_config_files = ["C:\\Users\\wolnicki\\Documents\\.aws\\config"]
-    shared_credentials_files = ["C:\\Users\\wolnicki\\Documents\\.aws\\credentials"]
+    #shared_config_files = ["C:\\Users\\wolnicki\\Documents\\.aws\\config"]
+    #shared_credentials_files = ["C:\\Users\\wolnicki\\Documents\\.aws\\credentials"]
+    shared_config_files = ["~/.aws/config"]
+    shared_credentials_files = ["~/.aws/credentials"]
 
 }
 
@@ -9,7 +11,7 @@ provider "aws"{
 variable platform{}
 variable instance_type{}
 variable ssh_key{}
-
+variable private_key_location{}
 variable vpc_cidr_blocks {
     description = "cidr blocks and name tags for vpc"
     type = list(object({
@@ -135,7 +137,22 @@ resource "aws_instance" "myapp-instance1"{
     vpc_security_group_ids = ["${aws_security_group.myapp-sg.id}"]
     associate_public_ip_address = true
     key_name = "${var.ssh_key}"
-    user_data = file("user-data.sh")
+    #user_data = file("user-data.sh")
+
+    connection {
+        type = "ssh"
+        host = self.public_ip
+        user = "ec2-user"
+        private_key = file("${var.private_key_location}")
+    }
+
+#Provisioners are NOT recommended by Terraform !!!! :)
+    provisioner "remote-exec"{
+        inline = [
+            "export ENV=dev",
+            "mkdir /tmp/terraform_creates"
+        ]
+    }
 
     tags = {
         Name = "myapp-instance1-${var.platform}"

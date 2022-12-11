@@ -1,6 +1,7 @@
 platform = "dev"
 instance_type = "t2.micro"
 ssh_key = "fidomwolnAWS"
+private_key_location = "keys/aws_key"
 
 vpc_cidr_blocks = [
     {
