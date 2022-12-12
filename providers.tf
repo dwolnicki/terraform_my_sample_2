@@ -6,3 +6,10 @@ terraform {
     }
   }
 }
+
+
+provider "aws"{
+    shared_config_files = ["C:\\Users\\wolnicki\\Documents\\.aws\\config"]
+    shared_credentials_files = ["C:\\Users\\wolnicki\\Documents\\.aws\\credentials"]
+
+}
