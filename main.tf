@@ -23,8 +23,9 @@ module "myapp-subnet"{
 module "myapp-instance"{
     source = "./modules/webserver"
     vpc_id = "${aws_vpc.myapp-vpc.id}"
-    instance_type = var.instance_type
-    subnet_id = module.myapp-subnet.subnet.id
-    ssh_key = var.ssh_key
-    platform = var.platform
+    instance_type = "${var.instance_type}"
+    subnet_id = "${module.myapp-subnet.subnet.id}"
+    ssh_key = "${var.ssh_key}"
+    platform = "${var.platform}"
+    image_regex = "${var.image_regex}"
 }

@@ -1,6 +1,7 @@
 platform = "dev"
 instance_type = "t2.micro"
 ssh_key = "fidomwolnAWS"
+image_regex = "amzn2-ami-kernel-5.10-hvm-*-x86_64-gp2"
 
 vpc_cidr_blocks = [
     {
